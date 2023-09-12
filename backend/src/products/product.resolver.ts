@@ -12,6 +12,11 @@ export class ProductResolver {
     return this.productService.getAll();
   }
 
+  @Query(() => ProductEntity)
+  public async getProductById(@Args('id') id: number): Promise<ProductEntity> {
+    return this.productService.getById(id);
+  }
+
   @Mutation(() => ProductEntity)
   createProduct(@Args('input') input: NewProductDto) {
     return this.productService.createProduct(input);

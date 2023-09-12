@@ -15,6 +15,14 @@ export class ProductService {
     return this.productsRepository.find();
   }
 
+  async getById(id: number) {
+    return this.productsRepository.findOne({
+      where: {
+        id,
+      },
+    });
+  }
+
   async createProduct(data: NewProductDto) {
     if (
       await this.productsRepository.exist({
