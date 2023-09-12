@@ -56,4 +56,18 @@ export class ProductService {
     }
     throw new NotFoundException('Produto não encontrado');
   }
+
+  async deleteProduct(id: number) {
+    if (
+      await this.productsRepository.exist({
+        where: {
+          id,
+        },
+      })
+    ) {
+      const { affected } = await this.productsRepository.delete(id);
+      return { status: affected > 0 ? 'success' : 'fail' };
+    }
+    throw new NotFoundException('Produto não encontrado');
+  }
 }

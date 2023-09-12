@@ -3,6 +3,7 @@ import { ProductService } from './product.service';
 import { ProductEntity } from './entity/product.entity';
 import { NewProductDto } from './dto/new-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import GraphQLJSON from 'graphql-type-json';
 
 @Resolver()
 export class ProductResolver {
@@ -29,5 +30,10 @@ export class ProductResolver {
     @Args('input') input: UpdateProductDto,
   ) {
     return this.productService.updateProduct(id, input);
+  }
+
+  @Mutation(() => GraphQLJSON)
+  deleteProduct(@Args('id') id: number) {
+    return this.productService.deleteProduct(id);
   }
 }
