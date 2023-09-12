@@ -1,8 +1,13 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './entity/product.entity';
 import { Repository } from 'typeorm';
 import { NewProductDto } from './dto/new-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -36,5 +41,19 @@ export class ProductService {
 
     const product = this.productsRepository.create(data);
     return this.productsRepository.save(product);
+  }
+
+  async updateProduct(id: number, data: UpdateProductDto) {
+    if (
+      await this.productsRepository.exist({
+        where: {
+          id,
+        },
+      })
+    ) {
+      await this.productsRepository.update(id, data);
+      return this.productsRepository.findOne({ where: { id } });
+    }
+    throw new NotFoundException('Produto não encontrado');
   }
 }
