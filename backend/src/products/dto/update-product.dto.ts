@@ -1,4 +1,20 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { NewProductDto } from './new-product.dto';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class UpdateProductDto extends PartialType(NewProductDto) {}
+@InputType()
+export class UpdateProductDto {
+  @Field(() => String)
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @Field(() => Number)
+  @IsNumber()
+  @IsOptional()
+  price?: number;
+
+  @Field(() => String)
+  @IsString()
+  @IsOptional()
+  image?: string;
+}
