@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import signIn from '../../firebase/utils/signin';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -12,8 +13,14 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login")
-    router.push('/')
+
+    const { error } = await signIn(email, password);
+
+    if (error) {
+      return alert(error.message)
+    }
+
+    return router.push("/")
   };
 
   return (

@@ -3,17 +3,24 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
+import signUp from '../../firebase/utils/signup';
 
 export default function Register() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  
+
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Register")
-    router.push('/')
+
+    const { error } = await signUp(email, password);
+
+    if (error) {
+      return alert(error.message)
+    }
+
+    return router.push("/")
   };
 
   return (
