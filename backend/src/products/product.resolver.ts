@@ -20,12 +20,12 @@ export class ProductResolver {
   }
 
   @Mutation(() => ProductEntity)
-  createProduct(@Args('input') input: NewProductDto) {
+  public async createProduct(@Args('input') input: NewProductDto) {
     return this.productService.createProduct(input);
   }
 
   @Mutation(() => ProductEntity)
-  updateProduct(
+  public async updateProduct(
     @Args('id') id: number,
     @Args('input') input: UpdateProductDto,
   ) {
@@ -33,7 +33,7 @@ export class ProductResolver {
   }
 
   @Mutation(() => GraphQLJSON)
-  deleteProduct(@Args('id') id: number) {
+  public async deleteProduct(@Args('id') id: number) {
     return this.productService.deleteProduct(id);
   }
 }
