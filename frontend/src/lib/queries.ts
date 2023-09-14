@@ -10,3 +10,13 @@ export const GET_ALL_PRODUCTS = gql`
     }
   }
 `;
+
+export const CREATE_PRODUCT = gql`
+  mutation createProduct($input: NewProductDto!) {
+    createProduct(input: $input) {
+      description
+      price
+      image
+    }
+  }
+`;
