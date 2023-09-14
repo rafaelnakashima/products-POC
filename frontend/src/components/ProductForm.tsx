@@ -2,21 +2,34 @@
 
 import { useState, useEffect } from 'react';
 import Link from "next/link";
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useMutation } from '@apollo/client';
-import { CREATE_PRODUCT } from '../lib/queries';
+import { CREATE_PRODUCT, UPDATE_PRODUCT } from '../lib/queries';
+import Product from '../interfaces/product.interface';
 
-export default function ProductForm() {
+interface ProductFormProps {
+  product?: Product;
+}
+
+const ProductCard: React.FC<ProductFormProps> = ({ product }) => {
 
   const [description, setDescription] = useState<string>('');
   const [price, setPrice] = useState<string>('');
   const [image, setImage] = useState<string>('');
 
   const [createProduct] = useMutation(CREATE_PRODUCT);
+  const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
   const params = useParams();
+  const router = useRouter();
 
-  // Function to fill fields when is update
+  useEffect(() => {
+    if (params?.id && product) {
+      setDescription(product.description)
+      setPrice(product.price.toString())
+      setImage(product.image)
+    }
+  }, [params?.id, product])
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,15 +38,29 @@ export default function ProductForm() {
       if (!description || !price || !image) {
         alert('fill in all fields')
       } else {
-        const { data } = await createProduct({
-          variables: {
-            input: { description, price: Number(price), image, },
-          },
-        });
-        alert(`produto ${data.createProduct.description} criado`);
-        setDescription('');
-        setPrice('');
-        setImage('');
+        if (params?.id && product) {
+          const { data } = await updateProduct({
+            variables: {
+              id: Number(params.id),
+              input: { description, price: Number(price), image, },
+            },
+          });
+          alert(`produto ${data.updateProduct.description} editado`);
+          setDescription('');
+          setPrice('');
+          setImage('');
+          router.push('/')
+        } else {
+          const { data } = await createProduct({
+            variables: {
+              input: { description, price: Number(price), image, },
+            },
+          });
+          alert(`produto ${data.createProduct.description} criado`);
+          setDescription('');
+          setPrice('');
+          setImage('');
+        }
       }
     } catch (error) {
       console.error('Erro ao criar o produto:', error);
@@ -82,3 +109,5 @@ export default function ProductForm() {
   );
 
 }
+
+export default ProductCard;

@@ -26,3 +26,24 @@ export const DELETE_PRODUCT = gql`
     deleteProduct(id: $id)
   }
 `;
+
+export const GET_PRODUCT_BY_ID = gql`
+  query getProductById($id: Float!) {
+    getProductById(id: $id) {
+      id
+      description
+      price
+      image
+    }
+  }
+`;
+
+export const UPDATE_PRODUCT = gql`
+  mutation updateProduct($id: Float!, $input: UpdateProductDto!) {
+    updateProduct(id: $id, input: $input) {
+      description
+      price
+      image
+    }
+  }
+`;
