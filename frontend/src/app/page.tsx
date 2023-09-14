@@ -1,26 +1,17 @@
 "use client";
 
-import { useState, useEffect } from 'react';
 import { DELETE_PRODUCT, GET_ALL_PRODUCTS } from "../lib/queries";
 import Link from "next/link";
-import { useSuspenseQuery } from "@apollo/experimental-nextjs-app-support/ssr";
 import ProductCard from "../components/ProductCard";
 import Product from "../interfaces/product.interface";
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
-  const { data, client } = useSuspenseQuery<{ getAllProducts: Product[] }>(GET_ALL_PRODUCTS);
-
-  const [onLoading, setOnLoading] = useState<boolean>(true)
+  const { data, client, loading } = useQuery<{ getAllProducts: Product[] }>(GET_ALL_PRODUCTS);
 
   const [deleteProduct] = useMutation(DELETE_PRODUCT);
-
-  useEffect(() => {
-    client.resetStore()
-    setOnLoading(false)
-  }, [client]);
 
   const handleDelete = async (id: number) => {
     await deleteProduct({
@@ -33,7 +24,7 @@ export default function Home() {
 
   return (
     <>
-      {onLoading ? (<div>...Loading</div>) :
+      {loading ? (<div>...Loading</div>) :
         <main className='m-2'>
           <div className='my-2'>
             <Link href="/new-product">
