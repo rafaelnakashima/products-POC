@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
           >{product.description}</p>
           <p
             className="text-2xl font-bold"
-          >{`R$ ${product.price}`}</p>
+          >{`${product.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`}</p>
         </div>
       </div>
       <div className="absolute top-0 right-12 m-2">
