@@ -19,13 +19,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
           >{product.description}</p>
           <p
             className="text-2xl font-bold"
-          >{`${product.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}`}</p>
+          >{`${product.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`}</p>
         </div>
       </div>
       <div className="absolute top-0 right-12 m-2">
         <Link href={`/${product.id}`}>
           <button className="text-indigo-500 hover:text-indigo-600 border p-2">
-            [e]
+            <Image
+              src="/edit-icon.svg"
+              height={25}
+              width={25}
+              alt="edit icon"
+            />
           </button>
         </Link>
       </div>
@@ -33,7 +38,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
         onClick={() => onDelete(product.id)}
         className="text-red-500 hover:text-red-600 border p-2 absolute top-0 right-0 m-2"
       >
-        [x]
+        <Image
+          src="/delete-icon.svg"
+          height={25}
+          width={25}
+          alt="delete icon"
+        />
       </button>
     </div>
   );
