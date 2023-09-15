@@ -34,7 +34,7 @@ const CheckoutPage: React.FC = () => {
           href="/"
           className="bg-orange-400 text-white px-4 py-2 rounded text-center"
         >
-          Voltar
+          Back
         </Link>
       </div>
       <ul className="space-y-4">
@@ -44,7 +44,7 @@ const CheckoutPage: React.FC = () => {
             className="flex justify-between items-center border p-2 rounded text-lg"
           >
             <div>
-              {item.product.description} - Quantity: {item.quantity} - Price: {(item.quantity * item.product.price).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+              {item.product.description} - Quantity: {item.quantity} - Price: {(item.quantity * item.product.price).toLocaleString('us', { style: 'currency', currency: 'USD' })}
             </div>
             <button
               onClick={() => removeFromCart(item.product.id)}
@@ -61,7 +61,7 @@ const CheckoutPage: React.FC = () => {
         ))}
       </ul>
       <div className="mt-4 md:text-2xl text-lg font-semibold">
-        Total: {total.toLocaleString("pt-br", { style: "currency", currency: "BRL" })}
+        Total: {total.toLocaleString('us', { style: 'currency', currency: 'USD' })}
       </div>
       <div className="mt-6">
         <PayPalButtons

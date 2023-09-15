@@ -102,7 +102,7 @@ const ProductCard: React.FC<ProductFormProps> = ({ product }) => {
           {params?.id ? 'Edit' : 'Create'}
         </button>
         <Link href="/" className="bg-orange-400 text-white px-4 py-2 rounded mt-2 mx-2 w-1/3 text-center">
-          Voltar
+          Back
         </Link>
       </div>
     </form>

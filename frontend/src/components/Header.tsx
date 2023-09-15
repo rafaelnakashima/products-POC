@@ -70,7 +70,7 @@ const Header: React.FC = () => {
         <div className="text-center">
           Total cart:{" "}
           <span className="text-indigo-500">
-            {total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
+            {total.toLocaleString('us', { style: 'currency', currency: 'USD' })}
           </span>
         </div>
       </div>

@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
           >{product.description}</p>
           <p
             className="text-2xl font-bold"
-          >{`${product.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`}</p>
+          >{`${product.price.toLocaleString('us', { style: 'currency', currency: 'USD' })}`}</p>
         </div>
       </div>
       <div className="flex items-center space-x-2 justify-end h-1/4">
@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
           onClick={() => addToCart(product, quantity)}
           className="bg-green-500 text-white px-4 py-2 rounded-md"
         >
-          Comprar
+          Buy
         </button>
       </div>
       <div className="absolute top-0 right-12 m-2">
