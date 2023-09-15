@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Product from "../interfaces/product.interface";
 import Image from "next/image";
+import { useCart } from "../context/CartContext";
 
 interface ProductCardProps {
   product: Product;
@@ -9,9 +10,14 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
+
+  const [quantity, setQuantity] = useState<number>(1);
+
+  const { addToCart } = useCart();
+
   return (
     <div key={product.id} className="border borde- p-4 md:m-0 mb-2 relative shadow-xl">
-      <div className="grid grid-cols-3 p-2">
+      <div className="grid grid-cols-3 p-2 h-3/4">
         <Image src={product.image} alt={product.description} width={200} height={200} className="col-span-1" />
         <div className="grid justify-between grid-col-1 col-span-2">
           <p
@@ -21,6 +27,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onDelete }) => {
             className="text-2xl font-bold"
           >{`${product.price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}`}</p>
         </div>
+      </div>
+      <div className="flex items-center space-x-2 justify-end h-1/4">
+        <input
+          type="number"
+          value={quantity}
+          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          className="border rounded-md w-16 p-2"
+        />
+        <button
+          onClick={() => addToCart(product, quantity)}
+          className="bg-green-500 text-white px-4 py-2 rounded-md"
+        >
+          Comprar
+        </button>
       </div>
       <div className="absolute top-0 right-12 m-2">
         <Link href={`/${product.id}`}>
