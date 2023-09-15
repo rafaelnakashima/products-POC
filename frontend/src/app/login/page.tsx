@@ -1,9 +1,11 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import signIn from '../../firebase/utils/signin';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../../firebase/config';
 
 export default function Login() {
   const [email, setEmail] = useState<string>('');
@@ -22,6 +24,17 @@ export default function Login() {
 
     return router.push("/")
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
